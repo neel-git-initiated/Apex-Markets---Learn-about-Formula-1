@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuits and Racing | Apex Markets</title>
+    <link rel="stylesheet" href="turns.css">
+    <link rel="stylesheet" href="navbar.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        APEX <span>MARKETS</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="f1-academy.html">F1 Academy</a>
+        <a href="predict.html">Podium</a>
+        <a href="about.html">About</a>
+    </div>
+
+</nav>
+    <header class="page-header">
+        <h1>Apex Markets</h1>
+        <p>Learn the circuit. Understand the race.</p>
+    </header>
+
+    <main class="turns-section">
+
+        <div class="turns-header">
+            <h2>Circuits & Racing</h2>
+            <p>Click any marker to learn about that part of the circuit.</p>
+        </div>
+
+        <div class="circuit-container">
+
+            <div class="track-stage">
+
+                <svg class="circuit-track"
+                     viewBox="0 0 1000 500"
+                     xmlns="http://www.w3.org/2000/svg"
+                     aria-label="Interactive racing circuit">
+
+                    <defs>
+                        <pattern id="grassPattern"
+                                 width="28"
+                                 height="28"
+                                 patternUnits="userSpaceOnUse">
+                            <path d="M0 28 L28 0"
+                                  stroke="#ffffff"
+                                  stroke-opacity="0.035"
+                                  stroke-width="2"/>
+                        </pattern>
+                    </defs>
+
+                    <!-- Track background -->
+                    <rect width="1000" height="500" fill="#173c2c"/>
+                    <rect width="1000" height="500" fill="url(#grassPattern)"/>
+
+                    <!-- Track outer border -->
+                    <path
+                        id="racingLine"
+                        d="M 145 385
+                           L 760 385
+                           C 815 385, 845 355, 845 315
+                           C 845 275, 815 250, 775 250
+                           L 735 250
+                           C 700 250, 685 230, 685 205
+                           C 685 180, 705 160, 735 160
+                           L 785 160
+                           C 820 160, 845 140, 845 110
+                           C 845 80, 820 65, 785 65
+                           L 330 65
+                           C 290 65, 270 90, 270 125
+                           L 270 205
+                           C 270 235, 250 255, 220 255
+                           L 170 255
+                           C 140 255, 120 275, 120 305
+                           C 120 335, 140 355, 170 355
+                           L 215 355
+                           C 245 355, 265 365, 265 385"
+                        fill="none"
+                        stroke="#ffffff"
+                        stroke-width="76"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"/>
+
+                    <!-- Asphalt -->
+                    <use href="#racingLine"
+                         fill="none"
+                         stroke="#45494e"
+                         stroke-width="66"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"/>
+
+                    <!-- Track centre line -->
+                    <use href="#racingLine"
+                         fill="none"
+                         stroke="#ffffff"
+                         stroke-width="2"
+                         stroke-dasharray="15 14"
+                         stroke-opacity="0.7"/>
+
+                    <!-- Start / finish line -->
+                    <g transform="translate(350 385)">
+                        <rect x="-5" y="-33" width="10" height="66" fill="#ffffff"/>
+                        <path d="M-5 -33 H0 V-22 H-5 Z M0 -22 H5 V-11 H0 Z
+                                 M-5 -11 H0 V0 H-5 Z M0 0 H5 V11 H0 Z
+                                 M-5 11 H0 V22 H-5 Z M0 22 H5 V33 H0 Z"
+                              fill="#171717"/>
+                    </g>
+
+                    <!-- Interactive markers are placed by JavaScript -->
+
+                    <g id="trackMarkers"></g>
+
+                </svg>
+
+                <!-- The car moves along the SVG racing line -->
+                <div class="f1-car" id="f1Car" aria-label="F1 car">
+                    <div class="car-wheel wheel-one"></div>
+                    <div class="car-wheel wheel-two"></div>
+                    <div class="car-wheel wheel-three"></div>
+                    <div class="car-wheel wheel-four"></div>
+                    <div class="car-body">
+                        <div class="car-wing"></div>
+                        <div class="car-cockpit"></div>
+                        <div class="car-nose"></div>
+                    </div>
+                </div>
+
+                <!-- Turn information popup -->
+                <div class="turn-info" id="turnInfo" aria-live="polite">
+                    <button class="popup-close" id="popupClose"
+                            aria-label="Close popup">&times;</button>
+                    <span class="popup-number" id="popupNumber">TURN 01</span>
+                    <h3 id="popupTitle">Circuit feature</h3>
+                    <p id="popupDescription">Click a circuit marker to learn more.</p>
+                </div>
+
+            </div>
+
+            <p class="track-note">
+                <span class="note-dot"></span>
+                Select a numbered marker to move the car along the circuit.
+            </p>
+
+        </div>
+
+        <div class="next-lesson">
+            <a href="t_and_s.html">← Previous Lesson</a>
+        </div>
+
+    </main>
+
+    <script>
+        const track = document.getElementById("racingLine");
+        const markersGroup = document.getElementById("trackMarkers");
+        const car = document.getElementById("f1Car");
+
+        const popup = document.getElementById("turnInfo");
+        const popupNumber = document.getElementById("popupNumber");
+        const popupTitle = document.getElementById("popupTitle");
+        const popupDescription = document.getElementById("popupDescription");
+        const popupClose = document.getElementById("popupClose");
+
+        // Information about each part of the circuit.
+        const turns = [
+            {
+                progress: 0.10,
+                number: "01",
+                name: "Main Straight",
+                description: "A straight section where drivers can accelerate to high speeds. It is also a common place to attempt an overtake."
+            },
+            {
+                progress: 0.23,
+                number: "02",
+                name: "Hairpin",
+                description: "A tight, almost U-shaped turn. Drivers brake heavily, slow down, turn sharply and accelerate out of the corner."
+            },
+            {
+                progress: 0.39,
+                number: "03",
+                name: "Chicane",
+                description: "A sequence of quick direction changes, usually left then right or right then left. Drivers must balance speed and control."
+            },
+            {
+                progress: 0.56,
+                number: "04",
+                name: "Fast Corner",
+                description: "A sweeping corner where drivers try to maintain speed while keeping the car stable and within track limits."
+            },
+            {
+                progress: 0.73,
+                number: "05",
+                name: "Braking Zone",
+                description: "The area where a driver brakes before a corner. Braking too early loses time, while braking too late can cause a lock-up or missed turn."
+            },
+            {
+                progress: 0.90,
+                number: "06",
+                name: "Corner Exit",
+                description: "The driver gradually applies power while straightening the car. A good exit helps build speed on the following straight."
+            }
+        ];
+
+        const trackLength = track.getTotalLength();
+
+        let currentProgress = 0.10;
+        let animationFrame = null;
+        let animationVersion = 0;
+        let popupTimer = null;
+
+        // Convert an SVG track position into screen percentages.
+        function getTrackPosition(progress) {
+            const point = track.getPointAtLength(
+                Math.max(0, Math.min(1, progress)) * trackLength
+            );
+
+            return {
+                x: point.x / 10,
+                y: point.y / 5,
+                pointX: point.x,
+                pointY: point.y
+            };
+        }
+
+        // Put a numbered marker directly on the track.
+        function createMarkers() {
+            turns.forEach((turn, index) => {
+                const position = getTrackPosition(turn.progress);
+
+                const marker = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "g"
+                );
+
+                marker.setAttribute("class", "turn-point");
+                marker.setAttribute("tabindex", "0");
+                marker.setAttribute("role", "button");
+                marker.setAttribute(
+                    "aria-label",
+                    turn.name + ". Click to learn more."
+                );
+                marker.setAttribute(
+                    "transform",
+                    `translate(${position.pointX} ${position.pointY})`
+                );
+
+                marker.innerHTML = `
+                    <circle class="marker-ring" r="23"></circle>
+                    <circle class="marker-core" r="17"></circle>
+                    <text class="marker-label" text-anchor="middle" dy="5">
+                        ${turn.number}
+                    </text>
+                `;
+
+                marker.addEventListener("click", () => selectTurn(index));
+
+                marker.addEventListener("keydown", event => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        selectTurn(index);
+                    }
+                });
+
+                markersGroup.appendChild(marker);
+            });
+        }
+
+        // Rotate and move the car to a position on the actual track path.
+        function placeCar(progress) {
+            const distance = Math.max(
+                0,
+                Math.min(1, progress)
+            ) * trackLength;
+
+            const point = track.getPointAtLength(distance);
+
+            // A second point gives the car its direction of travel.
+            const nextPoint = track.getPointAtLength(
+                Math.min(trackLength, distance + 1)
+            );
+
+            const angle = Math.atan2(
+                nextPoint.y - point.y,
+                nextPoint.x - point.x
+            ) * 180 / Math.PI;
+
+            car.style.left = (point.x / 10) + "%";
+            car.style.top = (point.y / 5) + "%";
+            car.style.transform =
+                `translate(-50%, -50%) rotate(${angle}deg)`;
+        }
+
+        // Smoothly travel along the path instead of jumping to a marker.
+        function moveCarTo(targetProgress) {
+            if (animationFrame !== null) {
+                cancelAnimationFrame(animationFrame);
+            }
+
+            const version = ++animationVersion;
+            const startProgress = currentProgress;
+            const difference = targetProgress - startProgress;
+            const duration = Math.max(
+                700,
+                Math.abs(difference) * 2400
+            );
+
+            let startTime = null;
+
+            function animate(timestamp) {
+                if (version !== animationVersion) return;
+
+                if (startTime === null) {
+                    startTime = timestamp;
+                }
+
+                const elapsed = timestamp - startTime;
+                const rawProgress = Math.min(elapsed / duration, 1);
+
+                // Smooth acceleration and deceleration.
+                const easedProgress =
+                    rawProgress < 0.5
+                        ? 4 * rawProgress * rawProgress * rawProgress
+                        : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
+
+                currentProgress =
+                    startProgress + difference * easedProgress;
+
+                placeCar(currentProgress);
+
+                if (rawProgress < 1) {
+                    animationFrame = requestAnimationFrame(animate);
+                } else {
+                    currentProgress = targetProgress;
+                    placeCar(currentProgress);
+                    animationFrame = null;
+                }
+            }
+
+            animationFrame = requestAnimationFrame(animate);
+        }
+
+        // Position the popup beside its selected marker.
+        function showPopup(turn) {
+            clearTimeout(popupTimer);
+
+            const position = getTrackPosition(turn.progress);
+
+            popup.classList.remove("is-closing", "is-visible");
+
+            popupNumber.textContent = "TURN " + turn.number;
+            popupTitle.textContent = turn.name;
+            popupDescription.textContent = turn.description;
+
+            // Keep the popup inside the track area.
+            const left = Math.max(18, Math.min(72, position.x + 3));
+            const top = Math.max(18, Math.min(72, position.y - 8));
+
+            popup.style.left = left + "%";
+            popup.style.top = top + "%";
+
+            // Restart the animation cleanly.
+            void popup.offsetWidth;
+            popup.classList.add("is-visible");
+        }
+
+        function closePopup() {
+            if (!popup.classList.contains("is-visible")) return;
+
+            popup.classList.remove("is-visible");
+            popup.classList.add("is-closing");
+
+            clearTimeout(popupTimer);
+
+            popupTimer = setTimeout(() => {
+                popup.classList.remove("is-closing");
+            }, 300);
+        }
+
+        function selectTurn(index) {
+            document.querySelectorAll(".turn-point").forEach(marker => {
+                marker.classList.remove("active");
+            });
+
+            const selectedMarker = markersGroup.children[index];
+            selectedMarker.classList.add("active");
+
+            const selectedTurn = turns[index];
+
+            moveCarTo(selectedTurn.progress);
+            showPopup(selectedTurn);
+        }
+
+        popupClose.addEventListener("click", closePopup);
+
+        // Create the circuit markers and place the car at the start.
+        createMarkers();
+        placeCar(currentProgress);
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Race Status Section -->
+
+    <section class="status-section">
+
+        <div class="status-heading">
+            <h2>Race Status & Terminology</h2>
+            <p>Understand the terms you see on the F1 timing screen.</p>
+        </div>
+
+        <div class="status-layout">
+
+            <!-- Main image -->
+            <div class="status-image">
+
+                <img src="Images/d_section.png"
+                     class="status-main-image"
+                     alt="Race status terminology">
+
+                <!-- DNF image -->
+                <img src="Images/dnf.png"
+                     class="status-hover-image image-dnf"
+                     alt="DNF">
+
+                <!-- DNS image -->
+                <img src="Images/dns.png"
+                     class="status-hover-image image-dns"
+                     alt="DNS">
+
+                <!-- DSQ image -->
+                <img src="Images/dsq.png"
+                     class="status-hover-image image-dsq"
+                     alt="DSQ">
+
+                <!-- DNQ image -->
+                <img src="Images/dnq.png"
+                     class="status-hover-image image-dnq"
+                     alt="DNQ">
+
+                <!-- PIT image -->
+                <img src="Images/pit.png"
+                     class="status-hover-image image-pit"
+                     alt="Pit">
+
+                <!-- White transition line -->
+                <div class="status-wipe-line"></div>
+
+            </div>
+
+            <!-- Status options -->
+            <div class="status-options">
+
+                <div class="status-option option-dnf">
+                    <span>01</span>
+                    <h3>DNF</h3>
+                    <p>Did Not Finish</p>
+                </div>
+
+                <div class="status-option option-dns">
+                    <span>02</span>
+                    <h3>DNS</h3>
+                    <p>Did Not Start</p>
+                </div>
+
+                <div class="status-option option-dsq">
+                    <span>03</span>
+                    <h3>DSQ</h3>
+                    <p>Disqualified</p>
+                </div>
+
+                <div class="status-option option-dnq">
+                    <span>04</span>
+                    <h3>DNQ</h3>
+                    <p>Did Not Qualify</p>
+                </div>
+
+                <div class="status-option option-pit">
+                    <span>05</span>
+                    <h3>PIT</h3>
+                    <p>Pit Stop</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+<!-- Interval vs Leader Section -->
+<section class="versus-section">
+
+    <div class="versus-heading">
+        <h2>Interval vs Leader</h2>
+        <p>Understand the difference between these two timing gaps.</p>
+    </div>
+
+    <div class="versus-container">
+
+        <div class="versus-card">
+            <img src="Images/interval.jpg" alt="Interval timing">
+            <h3>INTERVAL</h3>
+            <p>Time gap between a driver and the car directly ahead.</p>
+        </div>
+
+        <div class="versus-text">VS</div>
+
+        <div class="versus-card">
+            <img src="Images/leader.jpg" alt="Leader timing">
+            <h3>LEADER</h3>
+            <p>Time gap between a driver and the race leader.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Lesson Navigation Buttons -->
+
+<div class="lesson-navigation">
+
+    <div class="previous-lesson">
+        <a href="t_and_s.html">← Previous Lesson</a>
+    </div>
+
+    <div class="final-lesson-container">
+        <a href="final_lesson.html" class="final-lesson-button">
+            Where to Watch F1
+            <span>→</span>
+        </a>
+    </div>
+
+</div>
+
+
+</body>
+</html>
+
+

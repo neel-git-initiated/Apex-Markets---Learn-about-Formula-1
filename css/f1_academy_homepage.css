@@ -1,0 +1,100 @@
+/* Smooth scrolling for page navigation */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Main F1 learning promo section */
+.learn-f1-section {
+    margin: 35px 5%;
+    padding: 45px 50px;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E5E9;
+    border-left: 5px solid #E10600;
+    border-radius: 14px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Text content inside the learning section */
+.learn-f1-content {
+    max-width: 700px;
+}
+
+/* Small heading above the main title */
+.learn-f1-content h4 {
+    color: #E10600;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin: 0 0 15px;
+}
+
+/* Main heading of the learning section */
+.learn-f1-content h2 {
+    color: #202124;
+    font-size: 38px;
+    line-height: 1.2;
+    margin: 0 0 18px;
+}
+
+/* Highlighted text inside the heading */
+.learn-f1-content h2 span {
+    color: #E10600;
+}
+
+/* Description of the learning section */
+.learn-f1-content p {
+    color: #555B63;
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 25px;
+}
+
+/* Button linking to the F1 learning page */
+.learn-f1-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #E10600;
+    color: white;
+    padding: 13px 22px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+/* Darker button color on hover */
+.learn-f1-btn:hover {
+    background-color: #B80000;
+}
+
+/* Arrow or symbol inside the button */
+.learn-f1-btn span {
+    font-size: 20px;
+}
+
+/* Decorative number container */
+.learn-f1-number {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Large decorative number */
+.learn-f1-number span {
+    font-size: 90px;
+    font-weight: bold;
+    color: #F0F1F3;
+    line-height: 1;
+}
+
+/* Small label beneath the decorative number */
+.learn-f1-number p {
+    color: #777D85;
+    font-size: 10px;
+    letter-spacing: 2px;
+}

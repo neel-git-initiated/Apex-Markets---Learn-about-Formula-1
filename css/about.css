@@ -1,0 +1,190 @@
+
+/* General Page Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Roboto, Arial, sans-serif;
+    background-color: #F5F6F8;
+    color: #222222;
+    line-height: 1.6;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 6%;
+    background-color: #171717;
+}
+
+.logo {
+    color: white;
+    font-size: 23px;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #F04444;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.nav-links a.active {
+    color: #F04444;
+}
+
+/* About Hero */
+.about-hero {
+    text-align: center;
+    padding: 85px 18% 70px;
+    background-color: white;
+}
+
+.eyebrow {
+    color: #D82F36;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.about-hero h1 {
+    font-size: 42px;
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+.about-hero h1 span {
+    color: #D82F36;
+}
+
+.intro {
+    font-size: 17px;
+    color: #555555;
+    margin-bottom: 15px;
+}
+
+/* What Drives Us */
+.about-content {
+    padding: 65px 8%;
+}
+
+.about-content h2,
+.contact-section h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 35px;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.about-card {
+    background-color: white;
+    padding: 28px;
+    border-left: 4px solid #D82F36;
+    border-radius: 8px;
+}
+
+.about-card h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.about-card p {
+    color: #666666;
+    font-size: 15px;
+}
+
+/* Mission Section */
+.mission-section {
+    background-color: #202020;
+    color: white;
+    text-align: center;
+    padding: 55px 15%;
+}
+
+.mission-section h2 {
+    color: #F04444;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.mission-section p {
+    color: #EEEEEE;
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.about-btn {
+    display: inline-block;
+    background-color: #D82F36;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* Contact Section */
+.contact-section {
+    text-align: center;
+    padding: 65px 10%;
+    background-color: white;
+}
+
+.contact-intro {
+    color: #666666;
+    margin: -15px 0 28px;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.contact-links a {
+    display: inline-block;
+    min-width: 120px;
+    padding: 12px 20px;
+    color: #D82F36;
+    border: 1px solid #D82F36;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* Footer */
+.footer {
+    background-color: #171717;
+    color: #CCCCCC;
+    text-align: center;
+    padding: 22px;
+    font-size: 13px;
+}
+
+.footer p + p {
+    color: #F04444;
+    margin-top: 4px;
+}

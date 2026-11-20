@@ -1,0 +1,32 @@
+.drivers-section {
+    padding: 50px 5%;
+}
+
+.drivers-container {
+    display: flex;
+    gap: 25px;
+}
+
+.driver-card {
+    flex: 1;
+    background-color: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.driver-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.driver-card h3 {
+    margin-bottom: 8px;
+}
+
+.driver-card p {
+    color: #E10600;
+    font-weight: bold;
+}

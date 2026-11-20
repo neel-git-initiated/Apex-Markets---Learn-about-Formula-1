@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apex Markets | Podium Predictor</title>
+    <link rel="stylesheet" href="predict.css">
+    <link rel="stylesheet" href="navbar.css">
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        APEX <span>MARKETS</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="f1-academy.html">F1 Academy</a>
+        <a href="predict.html">Podium</a>
+        <a href="about.html">About</a>
+    </div>
+    
+</nav>
+
+
+    <main class="predict-container">
+
+        <p class="eyebrow">WEATHER-BASED PREDICTION</p>
+        <h1>Predict the <span>Top Three.</span></h1>
+        <p class="description">
+            Select a Grand Prix to generate a weather-based podium prediction.
+        </p>
+
+        <div class="predict-card">
+
+            <label for="race">Choose a Grand Prix</label>
+
+        <select id="race">
+            <option value="">Select a race</option>
+            <option value="lasvegas">Las Vegas Grand Prix</option>
+            <option value="qatar">Qatar Grand Prix</option>
+        </select>
+
+            <button id="predict-button" type="button">
+                Predict the Top Three →
+            </button>
+
+            <p id="status"></p>
+
+        </div>
+
+        <section id="result" class="result-section"></section>
+
+        <p class="disclaimer">
+            Experimental student model. These results are not real win probabilities.
+        </p>
+
+    </main>
+
+    <script>
+
+        // Details of the next two races
+        const races = {
+            lasvegas: {
+                name: "Las Vegas Grand Prix",
+                date: "2026-11-21",
+                raceTime: "20:00",
+                latitude: 36.1147,
+                longitude: -115.1730,
+                timezone: "America/Los_Angeles"
+            },
+
+            qatar: {
+                name: "Qatar Grand Prix",
+                date: "2026-11-29",
+                raceTime: "19:00",
+                latitude: 25.4900,
+                longitude: 51.4542,
+                timezone: "Asia/Qatar"
+            }
+        };
+
+        // Run prediction when the button is clicked
+        document.getElementById("predict-button")
+            .addEventListener("click", predictPodium);
+
+        async function predictPodium() {
+            const raceChoice = document.getElementById("race").value;
+            const status = document.getElementById("status");
+            const result = document.getElementById("result");
+
+            // Check whether a race has been selected
+            if (raceChoice === "") {
+                status.textContent = "Please select a Grand Prix first.";
+                result.innerHTML = "";
+                return;
+            }
+
+            const race = races[raceChoice];
+
+            status.textContent = "Loading race-day weather...";
+            result.innerHTML = "";
+
+            try {
+                // Request weather data from Open-Meteo
+                const url = new URL("https://api.open-meteo.com/v1/forecast");
+
+                url.search = new URLSearchParams({
+                    latitude: race.latitude,
+                    longitude: race.longitude,
+                    hourly: "relative_humidity_2m,precipitation_probability,weather_code",
+                    timezone: race.timezone,
+                    forecast_days: 16
+                });
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error("Could not load weather data.");
+                }
+
+                const data = await response.json();
+
+                // Find the weather at the local race start time
+                const raceTime = race.date + "T" + race.raceTime;
+                const hourIndex = data.hourly.time.indexOf(raceTime);
+
+                let humidity = null;
+                let rainChance = null;
+                let weatherCode = null;
+                let weather;
+                let weatherMessage;
+
+                // If the date is outside the forecast window, use a fallback
+                if (hourIndex === -1) {
+                    weather = "mixed";
+                    weatherMessage =
+                        "Race is outside the weather forecast window. " +
+                            "Showing an experimental fallback prediction.";
+                } else {
+                    humidity = data.hourly.relative_humidity_2m[hourIndex];
+                    rainChance = data.hourly.precipitation_probability[hourIndex] ?? 0;
+                    weatherCode = data.hourly.weather_code[hourIndex];
+
+                    // Classify the weather
+                    if (rainChance >= 50 || (weatherCode >= 51 && weatherCode <= 99)) {
+                        weather = "wet";
+                    } else if (rainChance <= 20 && humidity < 70 && weatherCode <= 3) {
+                        weather = "dry";
+                    } else {
+                        weather = "mixed";
+                    }
+
+                    weatherMessage =
+                        "Weather: " + weather.toUpperCase() +
+                        " | Rain chance: " + rainChance + "%" +
+                        " | Humidity: " + humidity + "%";
+                }
+
+                // Give every driver the same starting score
+                const drivers = [
+                    {
+                        name: "Max Verstappen",
+                        image: "Images/verstappen.png",
+                        score: 1
+                    },
+                    {
+                        name: "Lewis Hamilton",
+                        image: "Images/hamilton.png",
+                        score: 1
+                    },
+                    {
+                        name: "Lando Norris",
+                        image: "Images/norris.png",
+                        score: 1
+                    },
+                    {
+                        name: "Kimi Antonelli",
+                        image: "Images/antonelli.png",
+                        score: 1
+                    }
+                ];
+
+                // Apply weather-based scoring rules
+                if (weather === "dry") {
+                    drivers[1].score += 4; // Lewis Hamilton
+                    drivers[2].score += 2; // Lando Norris
+                } else if (weather === "wet") {
+                    drivers[0].score += 4; // Max Verstappen
+                    drivers[2].score += 2; // Lando Norris
+                } else {
+                    drivers[3].score += 4; // Kimi Antonelli
+                    drivers[1].score += 2; // Lewis Hamilton
+                }
+
+                // Sort drivers by score
+                drivers.sort((a, b) => b.score - a.score);
+
+                status.textContent = weatherMessage;
+
+                // Put P2 on the left, P1 in the centre and P3 on the right
+                const podiumPlaces = [
+                    { driver: drivers[1], position: "P2", className: "p2" },
+                    { driver: drivers[0], position: "P1", className: "p1" },
+                    { driver: drivers[2], position: "P3", className: "p3" }
+                ];
+
+                // Display the podium
+                result.innerHTML = `
+                    <h2>${race.name}</h2>
+
+                    <div class="podium">
+                        ${podiumPlaces.map(place => `
+                            <div class="podium-column ${place.className}">
+                                <img src="${place.driver.image}"
+                                    alt="${place.driver.name}">
+
+                                <p class="driver-name">${place.driver.name}</p>
+
+                                <div class="podium-step">
+                                    <span>${place.position}</span>
+                                </div>
+                            </div>
+                        `).join("")}
+                    </div>
+
+                    <p class="prediction-note">${weatherMessage}</p>
+                `;
+
+            } catch (error) {
+                status.textContent = error.message;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

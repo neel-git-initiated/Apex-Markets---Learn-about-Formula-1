@@ -1,0 +1,460 @@
+
+/* Top introduction with office image and red glow */
+
+/* Remove default white borders around the page */
+
+body {
+    margin: 0;
+}
+
+.strategy-hero {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 430px;
+    box-sizing: border-box;
+    padding: 45px 8% 70px;
+
+    background-color: #fe0000;
+    color: white;
+}
+
+/* Image on the right */
+
+.strategy-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url("Images/tech_office.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    z-index: 0;
+}
+
+/* Hover Effect */
+
+.strategy-hero::before {
+    transition: transform 0.4s ease;
+    transform: scale(1);
+    transform-origin: center;
+}
+
+.strategy-hero:hover::before {
+    transform: scale(1.06);
+}
+
+
+/* Red glow blending into the image */
+
+.strategy-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse 75% 115% at 0% 50%,
+            #fe0000 0%,
+            rgba(254, 0, 0, 0.98) 35%,
+            rgba(254, 0, 0, 0.82) 55%,
+            rgba(254, 0, 0, 0.38) 75%,
+            transparent 100%
+        ),
+        linear-gradient(
+            to right,
+            #fe0000 0%,
+            rgba(254, 0, 0, 0.85) 30%,
+            transparent 78%
+        );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Keep text above the image and glow */
+
+.strategy-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Main heading */
+
+.strategy-hero h1 {
+    max-width: 600px;
+    font-size: 48px;
+    line-height: 1.2;
+    margin: 0 0 18px;
+}
+
+/* Introduction paragraph */
+
+.strategy-intro {
+    max-width: 580px;
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Tyre types section */
+
+.tyre-section {
+    padding: 50px 8%;
+    background: #ffffff;
+    color: #202124;
+}
+
+.tyre-section h2 {
+    font-size: 36px;
+    margin: 0 0 10px;
+}
+
+.tyre-intro {
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+
+/* Arrange tyre cards in a row */
+
+.tyre-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* Individual tyre card */
+
+.tyre-card {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    background: #ffffff;
+    text-align: center;
+
+    border: 1px solid #d71920;
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: none;
+
+    transition: box-shadow 0.4s ease;
+}
+
+/* Red background behind the tyre */
+
+.tyre-visual {
+    position: relative;
+    z-index: 1;
+    padding: 20px 15px 35px;
+    background: #d71920;
+    color: #ffffff;
+}
+
+.tyre-visual h3 {
+    font-size: 24px;
+    margin: 0 0 20px;
+}
+
+/* Give every tyre the same image dimensions */
+
+/* .tyre-visual img {
+    display: block;
+
+    width: 180px;
+    height: 180px;
+
+    object-fit: contain;
+    object-position: center;
+
+    margin: 0 auto;
+
+    transform: rotate(0deg);
+    transition: transform 0.65s ease-in-out;
+} */
+
+/* Rotate anticlockwise and hold at 90 degrees */
+
+
+/* Tyre image and smooth rotation */
+
+.tyre-visual img {
+    display: block;
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    object-position: center;
+    margin: 0 auto;
+
+    transform: rotate(0deg);
+    transition: transform 0.65s ease-in-out;
+}
+
+/* Rotate clockwise by 90 degrees on hover */
+
+.tyre-card:hover .tyre-visual img,
+.tyre-card:focus-within .tyre-visual img {
+    transform: rotate(90deg);
+}
+
+/* Content area */
+
+.tyre-content {
+    position: relative;
+    z-index: 2;
+
+    padding: 0 20px;
+    text-align: left;
+    background: #ffffff;
+
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+
+    /* Reveal from top to bottom */
+
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-12px);
+
+    transition:
+        max-height 0.6s ease,
+        padding 0.5s ease,
+        opacity 0.5s ease,
+        transform 0.5s ease,
+        clip-path 0.5s ease,
+        visibility 0.5s ease;
+}
+
+.tyre-content h4 {
+    font-size: 19px;
+    margin: 0 0 10px;
+}
+
+.tyre-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Expand ONLY the hovered card */
+
+.tyre-card:hover,
+.tyre-card:focus-within {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.tyre-card:hover .tyre-content,
+.tyre-card:focus-within .tyre-content {
+    max-height: 220px;
+    padding: 20px;
+
+    opacity: 1;
+    visibility: visible;
+
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+}
+
+/* Pit stops section */
+
+.pitstop-section {
+    padding: 50px 8%;
+    background: #f5f5f5;
+    color: #202124;
+    text-align: center;
+}
+
+.pitstop-section h2 {
+    font-size: 32px;
+    margin: 0 0 30px;
+}
+
+/* Pit stop image */
+
+.pitstop-image {
+    display: block;
+    width: 650px;
+    height: 350px;
+    object-fit: cover;
+
+    margin: 0 auto;
+    border-radius: 16px;
+
+    transition: transform 0.3s ease;
+}
+
+/* Slightly enlarge the image on hover
+
+.pitstop-image {
+    display: block;
+
+    width: 650px;
+    height: auto;
+    max-width: 100%;
+
+    object-fit: contain;
+
+    margin: 0 auto;
+    border-radius: 16px;
+
+    transition: transform 0.3s ease;
+} */
+
+.pitstop-image:hover {
+    transform: scale(1.05);
+}
+
+.pitstop-context {
+    max-width: 650px;
+    margin: 25px auto 0;
+
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444444;
+}
+
+
+/* Undercut vs Overcut section */
+
+.strategy-comparison {
+    padding: 55px 8%;
+    background: #f5f5f5;
+    color: #000000;
+}
+.strategy-comparison > h2 {
+    font-size: 36px;
+    margin: 0 0 35px;
+    color: #000000;
+}
+/* Place both strategy cards side by side */
+
+.comparison-container {
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+}
+
+/* Individual strategy card */
+
+.comparison-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    flex: 1;
+    min-width: 0;
+    min-height: 300px;
+
+    overflow: hidden;
+    border-radius: 14px;
+    background: #000000;
+}
+
+/* Strategy image */
+
+.comparison-card img {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 85%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    z-index: 0;
+    transition: transform 0.4s ease;
+}
+
+/* Slight zoom on hover */
+
+.comparison-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Text with black cloud fade */
+
+.comparison-text {
+    position: relative;
+    z-index: 1;
+
+    width: 70%;
+    min-height: 300px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 25px 0 25px 35px;
+
+    background: linear-gradient(
+        to right,
+        #000000 0%,
+        rgba(0, 0, 0, 0.95) 25%,
+        rgba(0, 0, 0, 0.78) 48%,
+        rgba(0, 0, 0, 0.4) 72%,
+        transparent 100%
+    );
+}
+
+/* Larger red strategy heading */
+
+.comparison-text h3 {
+    color: #fe0000;
+    font-size: 48px;
+    line-height: 0.95;
+    margin: 0 0 18px;
+    overflow-wrap: anywhere;
+}
+
+/* Larger strategy description */
+
+.comparison-text p {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 250px;
+    margin: 0;
+}
+
+
+
+
+/* Lesson Navigation Buttons */
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 8%;
+    background: #f5f5f5;
+}
+
+.previous-lesson a,
+.next-lesson a {
+    display: inline-block;
+    background: #fe0000;
+    color: #ffffff;
+    text-decoration: none;
+
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.previous-lesson a:hover,
+.next-lesson a:hover {
+    background: #cc0000;
+}
+
+
+

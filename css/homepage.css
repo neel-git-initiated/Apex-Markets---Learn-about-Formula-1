@@ -1,0 +1,338 @@
+/* main body's style */
+        body {
+            background-color: #F5F6F8;
+            color: #202124;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .bgimage-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden; /*stopping the image to extend out of the container*/
+            margin-top: 30px;
+            background-color: #F5F6F8;
+        }
+
+        /* Combined F1 and background image */
+
+        .f1bg-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: right center;
+            z-index: 1;
+        }
+        
+    .f1bg-image {
+    transition: transform 0.4s ease;
+    transform-origin: center;
+    }
+
+    .bgimage-container:hover .f1bg-image {
+    transform: scale(1.06);
+    }
+
+
+        /* White cloud fading into transparency */
+
+        .white-glow {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+
+            background:
+                /* Keep the right side of the image more visible */
+                linear-gradient(to right,
+                    #F5F6F8 0%,
+                    rgba(245, 246, 248, 0.9) 10%,
+                    rgba(245, 246, 248, 0.5) 22%,
+                    transparent 40%,
+                    transparent 100%
+                ),
+                linear-gradient(to top,
+                    #F5F6F8 0%,
+                    transparent 35%
+                ),
+                radial-gradient(ellipse 38% 65% at 12% 50%,
+                    rgba(255, 255, 255, 1) 0%,
+                    rgba(255, 255, 255, 0.9) 25%,
+                    rgba(255, 255, 255, 0.45) 55%,
+                    rgba(255, 255, 255, 0.12) 75%,
+                    transparent 100%
+                );
+        }
+
+        /* h1 styles */
+
+
+
+        h1 {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 24px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        h4 {
+            color: #951022;
+            margin-bottom: 5px;
+
+        }
+
+        h3 {
+    margin-bottom: 5px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+
+.red-text {
+    color: #E10600;
+}
+
+        .homepage-para {
+            margin-top: -10px;
+            /* line-height: 20px; */
+        }
+
+        .homepage-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .homepage-buttons button {
+            padding: 12px 22px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .explore-btn {
+        background-color: #E10600;
+        color: white;
+        border: none;
+        }
+        
+        /* .bold {
+            font-weight: bold;
+        } */
+
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E5E9;
+        }
+
+        /* nav styles */
+
+        nav ul {
+            display: flex;
+            flex-direction: row;
+            list-style: none;
+            gap: 40px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: #000;
+            text-decoration: none;
+            /* font-family: Arial, sans-serif; */
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        /* Heading and paragraph on top */
+
+    .cloud-text {
+        position: absolute;
+        top: 50%;
+        left: 4%;
+        transform: translateY(-50%);
+        z-index: 4;
+        color: #202124;
+    }
+        .cloud-text h2 {
+            font-size: 38px;
+            margin: 0 0 15px;
+        }
+
+        .cloud-text p {
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+
+
+        .more-fake-homepage-content {
+            margin-bottom: 0;
+            padding: 20px 4%;
+            padding-bottom: 10px;
+        }
+
+        .more-fake-homepage-content h3 {
+            margin-bottom: 5px;
+        }
+
+        .more-fake-homepage-content h2 {
+            margin-top: 0;
+        }
+
+        
+/* Engineering card image hover effect */
+
+.engineering-card {
+    overflow: hidden;
+}
+
+.engineering-image {
+    transition: transform 0.4s ease;
+}
+
+.engineering-card:hover .engineering-image {
+    transform: scale(1.06);
+}
+
+        .engineering-section {
+            padding-top: 10px;
+            margin-top: 0;
+        }
+/* Podium Prediction Promo Card */
+
+.podium-promo-section {
+    margin: 35px 5%;
+    padding: 45px 50px;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E5E9;
+    border-left: 5px solid #E10600;
+    border-radius: 14px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.podium-promo-content {
+    max-width: 700px;
+}
+
+.podium-promo-content h4 {
+    color: #E10600;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin: 0 0 15px;
+}
+
+.podium-promo-content h2 {
+    color: #202124;
+    font-size: 38px;
+    line-height: 1.2;
+    margin: 0 0 18px;
+}
+
+.podium-promo-content h2 span {
+    color: #E10600;
+}
+
+.podium-promo-content p {
+    color: #555B63;
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 25px;
+}
+
+.podium-promo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #E10600;
+    color: white;
+    padding: 13px 22px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.podium-promo-btn:hover {
+    background-color: #B80000;
+}
+
+.podium-promo-btn span {
+    font-size: 20px;
+}
+
+.podium-promo-number {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.podium-promo-number span {
+    font-size: 90px;
+    font-weight: bold;
+    color: #F0F1F3;
+    line-height: 1;
+}
+
+.podium-promo-number p {
+    color: #777D85;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* Driver card image hover effect */
+
+.driver-card {
+    overflow: hidden;
+}
+
+.driver-card img {
+    transition: transform 0.4s ease;
+    transform-origin: center;
+}
+
+.driver-card:hover img {
+    transform: scale(1.06);
+}
+
+
+.driver-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center top;
+
+    transition: transform 0.4s ease;
+    transform-origin: center;
+}
+
+.driver-card {
+    overflow: hidden;
+}
+
+.driver-card:hover img {
+    transform: scale(1.06);
+}
+
+/* Roboto font only for the F1 hero section */
+
+/* .cloud-text {
+    font-family: 'Roboto', sans-serif;
+}
+
+.cloud-text button {
+    font-family: 'Roboto', sans-serif;
+} */

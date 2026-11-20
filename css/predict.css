@@ -1,0 +1,212 @@
+
+/* Basic page setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F6F8;
+    color: #202020;
+}
+
+.logo {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #E1262F;
+}
+
+.home-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Main heading */
+.predict-container {
+    width: 850px;
+    max-width: 90%;
+    margin: 65px auto;
+    text-align: center;
+}
+
+.eyebrow {
+    color: #E1262F;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+h1 span {
+    color: #E1262F;
+}
+
+.description {
+    color: #666666;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Race selection card */
+.predict-card {
+    width: 560px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 25px;
+    text-align: left;
+    background-color: white;
+    border: 1px solid #E1E1E1;
+    border-top: 4px solid #E1262F;
+    border-radius: 9px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.predict-card label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.predict-card select {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 16px;
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 15px;
+}
+
+.predict-card button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #E1262F;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.predict-card button:hover {
+    background-color: #B91D25;
+}
+
+#status {
+    margin-top: 16px;
+    color: #555555;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Podium section */
+.result-section {
+    margin-top: 45px;
+}
+
+.result-section h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+}
+
+/* Three podium columns */
+.podium {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 15px;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 10px 0;
+}
+
+.podium-column {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Driver images */
+.podium-column img {
+    width: 100%;
+    max-width: 165px;
+    height: 155px;
+    object-fit: contain;
+    object-position: center bottom;
+    margin-bottom: 12px;
+}
+
+.driver-name {
+    min-height: 36px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+/* Podium blocks */
+.podium-step {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 20px;
+    background-color: #D9DDE3;
+    border-radius: 5px 5px 0 0;
+}
+
+.podium-step span {
+    font-size: 30px;
+    font-weight: bold;
+    color: #343434;
+}
+
+/* First place is highest and in the centre */
+.p1 .podium-step {
+    height: 150px;
+    background-color: #E1262F;
+}
+
+.p1 .podium-step span {
+    color: white;
+}
+
+.p1 img {
+    height: 180px;
+}
+
+/* Second place is on the left */
+.p2 .podium-step {
+    height: 105px;
+}
+
+/* Third place is on the right */
+.p3 .podium-step {
+    height: 75px;
+}
+
+/* Disclaimer */
+.disclaimer {
+    color: #888888;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 25px;
+}

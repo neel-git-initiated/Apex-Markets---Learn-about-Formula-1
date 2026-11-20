@@ -1,0 +1,632 @@
+
+/* F1 Academy page */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fe0000;
+    color: white;
+}
+
+
+
+/* Top introduction with F1 image and red glow */
+
+.academy-hero {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 430px;
+    box-sizing: border-box;
+    padding: 45px 8% 70px;
+
+    background-color: #fe0000;
+    color: white;
+}
+
+/* F1 image on the right */
+
+.academy-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url("Images/person_watching_f1.png");
+    background-size: 75% auto;
+    background-position: 120% center;
+    background-repeat: no-repeat;
+
+    z-index: 0;
+}
+
+/* Hover effect */
+.academy-hero::before {
+    transition: transform 0.4s ease;
+    transform: scale(1);
+    transform-origin: center;
+}
+
+.academy-hero:hover::before {
+    transform: scale(1.06);
+}
+
+/* Red glow blending into the image */
+
+.academy-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse 75% 115% at 0% 50%,
+            #fe0000 0%,
+            rgba(254, 0, 0, 0.98) 35%,
+            rgba(254, 0, 0, 0.82) 55%,
+            rgba(254, 0, 0, 0.38) 75%,
+            transparent 100%
+        ),
+        linear-gradient(
+            to right,
+            #fe0000 0%,
+            rgba(254, 0, 0, 0.85) 30%,
+            transparent 78%
+        );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Keep the text above the image and glow */
+
+.academy-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+.back-home {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 40px;
+    font-size: 15px;
+}
+
+.back-home:hover {
+    text-decoration: underline;
+}
+
+.academy-hero h1 {
+    max-width: 500px;
+    font-size: 48px;
+    line-height: 1.3;
+    margin: 0 0 18px;
+}
+
+.intro {
+    max-width: 580px;
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+
+
+/* White flags section */
+
+.flags-section {
+    position: relative;
+
+    background: #ffffff;
+    color: #202124;
+
+    /* Thin line separating red and white */
+    border-top: 2px solid #ffffff;
+
+    padding: 40px 8% 100px;
+    min-height: 450px;
+    box-sizing: border-box;
+}
+
+
+/* Section heading */
+
+.flags-heading {
+    max-width: 750px;
+    margin-bottom: 45px;
+}
+
+.flags-heading h2 {
+    font-size: 34px;
+    margin: 0 0 12px;
+}
+
+.flags-heading p {
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+
+/* Flag card */
+
+.flag-card {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    max-width: 950px;
+    min-height: 240px;
+    gap: 30px;
+
+    outline: none;
+}
+
+/* Space between the different flag cards */
+
+.flag-card + .flag-card {
+    margin-top: 35px;
+}
+
+
+/* Flag on the left */
+
+.flag {
+    width: 200px;
+    flex-shrink: 0;
+
+    position: relative;
+    z-index: 2;
+
+    transition: transform 0.3s ease;
+}
+
+.flag img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
+/* Explanation panel on the right */
+
+.flag-content {
+    position: relative;
+
+    flex: 1;
+    min-width: 0;
+    padding: 30px 35px;
+
+    color: white;
+    background: #fe0000;
+    border-radius: 12px;
+
+    opacity: 0;
+    transform: translateX(-15px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+
+    pointer-events: none;
+}
+
+
+/* Checkered flag: black background */
+
+.flag-card:nth-of-type(2) .flag-content {
+    background: #171717;
+}
+
+
+/* Blue flag: blue background */
+
+.flag-card:nth-of-type(3) .flag-content {
+    background: #0057b8;
+}
+
+
+/* Yellow flag: darker golden yellow background */
+
+.flag-card:nth-of-type(4) .flag-content {
+    background: #c47a00;
+}
+
+
+/* Red flag: red background */
+
+.flag-card:nth-of-type(5) .flag-content {
+    background: #fe0000;
+}
+
+
+/* Content typography */
+
+.flag-content h2 {
+    font-size: 28px;
+    margin: 0 0 15px;
+}
+
+.flag-content p {
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.flag-content .flag-fact {
+    font-weight: bold;
+}
+
+
+/* Hover animation */
+
+.flag-card:hover .flag {
+    transform: scale(1.08);
+}
+
+.flag-card:hover .flag-content {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* Keyboard interaction */
+
+.flag-card:focus-visible {
+    outline: 2px solid #202124;
+    outline-offset: 5px;
+}
+
+.flag-card:focus-within .flag {
+    transform: scale(1.08);
+}
+
+.flag-card:focus-within .flag-content {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+
+
+
+
+
+/* Race weekend timeline */
+
+.week-section {
+    position: relative;
+    overflow: hidden;
+
+    padding: 55px 8% 45px;
+    box-sizing: border-box;
+
+    background-image: url("Images/trophy.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* Transparent white layer over the trophy image */
+
+.week-overlay {
+    position: relative;
+    z-index: 1;
+
+    padding: 35px;
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.88);
+    color: #202124;
+}
+
+
+/* Heading */
+
+.week-overlay > h2 {
+    font-size: 38px;
+    margin: 0 0 12px;
+}
+
+.week-intro {
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 650px;
+}
+
+.timeline-instruction {
+    font-size: 14px;
+    color: #555;
+    margin-top: 28px;
+}
+
+
+/* Horizontal timeline */
+
+.week-timeline {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-top: 25px;
+    min-height: 245px;
+}
+
+
+/* Line connecting all seven days */
+
+.week-timeline::before {
+    content: "";
+    position: absolute;
+
+    top: 17px;
+    left: 7%;
+    right: 7%;
+
+    height: 3px;
+    background: #c9c9c9;
+}
+
+
+/* Individual day */
+
+.timeline-day {
+    position: static;
+    flex: 1;
+    text-align: center;
+}
+
+
+/* Day button */
+
+.day-point {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+    padding: 0;
+
+    border: none;
+    background: transparent;
+    color: #202124;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* Circle on the timeline */
+
+.day-dot {
+    display: block;
+
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+
+    background: white;
+    border: 4px solid #fe0000;
+    box-sizing: content-box;
+
+    transition: transform 0.25s ease,
+                background 0.25s ease;
+}
+
+
+/* Highlight the selected day */
+
+.timeline-day:hover .day-dot,
+.timeline-day:focus-within .day-dot {
+    transform: scale(1.25);
+    background: #fe0000;
+}
+
+.day-point:focus-visible {
+    outline: 2px solid #202124;
+    outline-offset: 5px;
+}
+
+
+/* Event information revealed by hovering */
+
+.day-details {
+    position: absolute;
+    top: 95px;
+    left: 0;
+    right: 0;
+
+    min-height: 125px;
+    box-sizing: border-box;
+    padding: 22px 25px;
+
+    border-left: 5px solid #fe0000;
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.96);
+    text-align: left;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+
+    transition: opacity 0.25s ease,
+                transform 0.25s ease,
+                visibility 0.25s ease;
+
+    pointer-events: none;
+}
+
+
+/* Show the relevant day's information */
+
+.timeline-day:hover .day-details,
+.timeline-day:focus-within .day-details {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* Event text */
+
+.day-details h3 {
+    margin: 0 0 10px;
+    font-size: 23px;
+}
+
+.day-details p {
+    margin: 0 0 10px;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.day-details .race-fact {
+    font-weight: bold;
+}
+
+
+/* Make Sunday stand out */
+
+.sunday .day-dot {
+    border-color: #b8860b;
+}
+
+.sunday .day-point {
+    color: #b00000;
+}
+
+
+/* Small note under the timeline */
+
+.week-note {
+    margin: 10px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #555;
+}
+
+
+
+
+
+
+/* VSC vs SC section */
+
+.safety-section {
+    padding: 45px 8% 60px;
+    background: #ffffff;
+    color: #202124;
+}
+
+.safety-section h2 {
+    font-size: 34px;
+    margin: 0 0 10px;
+}
+
+.safety-intro {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+
+/* Place the two cards side by side */
+
+.safety-cards {
+    display: flex;
+    gap: 30px;
+}
+
+
+/* Individual cards */
+
+.safety-card {
+    flex: 1;
+    overflow: hidden;
+
+    background: #f5f5f5;
+    border-radius: 12px;
+
+    transition: transform 0.3s ease;
+}
+
+
+/* Slightly increase the card size on hover */
+
+.safety-card:hover {
+    transform: scale(1.03);
+}
+
+
+/* Card image */
+
+.safety-card img {
+    display: block;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+
+/* Text inside each card */
+
+.safety-content {
+    padding: 20px;
+}
+
+.safety-content h3 {
+    font-size: 23px;
+    margin: 0 0 12px;
+}
+
+.safety-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+
+
+/* Lesson Navigation Buttons */
+
+.lesson-navigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 8% 50px;
+    background: #ffffff;
+}
+
+.next-lesson a,
+.previous-lesson a {
+    display: inline-block;
+    background: #fe0000;
+    color: #ffffff;
+    text-decoration: none;
+
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.next-lesson a:hover,
+.previous-lesson a:hover {
+    background: #cc0000;
+}
+

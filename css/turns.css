@@ -1,0 +1,662 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #202020;
+}
+
+/* Page heading */
+
+.page-header {
+    padding: 22px 55px;
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+}
+
+.page-header h1 {
+    font-size: 25px;
+    font-weight: 800;
+    color: #e10600;
+}
+
+.page-header p {
+    margin-top: 6px;
+    color: #666666;
+    font-size: 14px;
+}
+
+/* Main section */
+
+.turns-section {
+    padding: 35px 55px 50px;
+}
+
+.turns-header {
+    margin-bottom: 24px;
+}
+
+.turns-header h2 {
+    font-size: 30px;
+    margin-bottom: 9px;
+}
+
+.turns-header p {
+    color: #666666;
+    font-size: 15px;
+}
+
+/* Track container */
+
+.circuit-container {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.track-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    border-radius: 9px;
+    background: #173c2c;
+}
+
+.circuit-track {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Interactive circuit markers */
+
+.turn-point {
+    cursor: pointer;
+    outline: none;
+}
+
+.marker-ring {
+    fill: #ffffff;
+    fill-opacity: 0.18;
+    stroke: #ffffff;
+    stroke-width: 2;
+    transition: r 0.2s ease, fill-opacity 0.2s ease;
+}
+
+.marker-core {
+    fill: #e10600;
+    stroke: #ffffff;
+    stroke-width: 2;
+    transition: r 0.2s ease, fill 0.2s ease;
+}
+
+.marker-label {
+    fill: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.turn-point:hover .marker-ring,
+.turn-point:focus .marker-ring {
+    r: 27;
+    fill-opacity: 0.35;
+}
+
+.turn-point:hover .marker-core,
+.turn-point:focus .marker-core,
+.turn-point.active .marker-core {
+    r: 20;
+    fill: #ff453a;
+}
+
+.turn-point.active .marker-ring {
+    r: 29;
+    fill-opacity: 0.45;
+}
+
+/* F1 car */
+
+.f1-car {
+    position: absolute;
+    z-index: 5;
+
+    /* Close to the width of the road */
+    width: 58px;
+    height: 30px;
+
+    pointer-events: none;
+    transform-origin: center center;
+    will-change: left, top, transform;
+
+    /*
+       JavaScript controls the position and rotation.
+       Do not add a CSS transition to left or top,
+       because requestAnimationFrame controls movement.
+    */
+}
+
+/* Four wheels */
+
+.car-wheel {
+    position: absolute;
+    z-index: 1;
+    width: 11px;
+    height: 8px;
+    background: #151515;
+    border: 1px solid #777777;
+    border-radius: 2px;
+}
+
+.wheel-one {
+    left: 7px;
+    top: 1px;
+}
+
+.wheel-two {
+    right: 7px;
+    top: 1px;
+}
+
+.wheel-three {
+    left: 7px;
+    bottom: 1px;
+}
+
+.wheel-four {
+    right: 7px;
+    bottom: 1px;
+}
+
+/* Main body of the car */
+
+.car-body {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    top: 5px;
+    bottom: 5px;
+    z-index: 2;
+    background: #e10600;
+    border: 1px solid #ff6a63;
+    border-radius: 8px 8px 5px 5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Front wing */
+
+.car-wing {
+    position: absolute;
+    left: -5px;
+    top: 3px;
+    width: 10px;
+    height: 14px;
+    background: #222222;
+    border-radius: 2px;
+}
+
+/* Driver cockpit */
+
+.car-cockpit {
+    position: absolute;
+    left: 15px;
+    top: 3px;
+    width: 12px;
+    height: 10px;
+    background: #202b38;
+    border: 1px solid #aaaaaa;
+    border-radius: 45%;
+}
+
+/* Pointed nose */
+
+.car-nose {
+    position: absolute;
+    right: -5px;
+    top: 6px;
+    width: 12px;
+    height: 5px;
+    background: #ff2922;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* Turn popup */
+
+.turn-info {
+    position: absolute;
+    z-index: 10;
+    width: 250px;
+    max-width: 35%;
+    padding: 19px 18px 17px;
+
+    color: #ffffff;
+    background: rgba(20, 22, 26, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 3px solid #e10600;
+    border-radius: 9px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    /*
+       Popup starts lower and to the left.
+       It fades in while moving toward the upper right.
+    */
+    transform: translate(-24px, 18px) scale(0.94);
+    transform-origin: bottom left;
+
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease,
+        visibility 0s linear 0.28s;
+}
+
+.turn-info.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform: translate(0, 0) scale(1);
+
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease,
+        visibility 0s;
+}
+
+/* Reverse the movement when closing */
+
+.turn-info.is-closing {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translate(-24px, 18px) scale(0.94);
+
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease,
+        visibility 0s linear 0.28s;
+}
+
+.popup-number {
+    display: block;
+    color: #ff5b54;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 9px;
+}
+
+.turn-info h3 {
+    font-size: 19px;
+    margin-bottom: 9px;
+}
+
+.turn-info p {
+    color: #dddddd;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.popup-close {
+    position: absolute;
+    top: 7px;
+    right: 9px;
+
+    width: 25px;
+    height: 25px;
+
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.popup-close:hover {
+    color: #ff5b54;
+}
+
+/* Note below the track */
+
+.track-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 15px 3px 2px;
+    color: #666666;
+    font-size: 13px;
+}
+
+.note-dot {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #e10600;
+}
+
+/* Previous lesson link */
+
+.next-lesson {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+}
+
+.next-lesson a {
+    display: inline-block;
+    padding: 12px 19px;
+    background: #e10600;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background 0.2s ease;
+}
+
+.next-lesson a:hover {
+    background: #b80000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Race Status Section */
+
+.status-section {
+    margin-top: 55px;
+    padding: 35px;
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.status-heading {
+    margin-bottom: 28px;
+}
+
+.status-heading h2 {
+    font-size: 30px;
+    margin-bottom: 9px;
+}
+
+.status-heading p {
+    font-size: 15px;
+    color: #666666;
+}
+
+/* Main layout */
+
+.status-layout {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+/* Image area */
+
+.status-image {
+    position: relative;
+    width: 58%;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: #171717;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.status-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Default image */
+
+.status-main-image {
+    z-index: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Hover images */
+
+.status-hover-image {
+    z-index: 2;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.55s ease;
+}
+
+/* White wipe line */
+
+.status-wipe-line {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    background: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        left 0.55s ease,
+        opacity 0.15s ease;
+}
+
+/* Selected category image */
+
+.status-layout:has(.option-dnf:hover) .image-dnf,
+.status-layout:has(.option-dns:hover) .image-dns,
+.status-layout:has(.option-dsq:hover) .image-dsq,
+.status-layout:has(.option-dnq:hover) .image-dnq,
+.status-layout:has(.option-pit:hover) .image-pit {
+    clip-path: inset(0 0 0 0);
+}
+
+/* Hide the main image when hovering */
+
+.status-layout:has(.status-option:hover) .status-main-image {
+    opacity: 0;
+}
+
+/* Animate the white line */
+
+.status-layout:has(.status-option:hover) .status-wipe-line {
+    opacity: 1;
+    left: 100%;
+}
+
+/* Options on the right */
+
+.status-options {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-option {
+    position: relative;
+    padding: 15px 12px 15px 48px;
+    border-bottom: 1px solid #e5e5e5;
+    cursor: pointer;
+    transition:
+        background 0.25s ease,
+        padding-left 0.25s ease;
+}
+
+.status-option:last-child {
+    border-bottom: none;
+}
+
+.status-option span {
+    position: absolute;
+    left: 10px;
+    top: 18px;
+    font-size: 11px;
+    color: #999999;
+}
+
+.status-option h3 {
+    font-size: 21px;
+    color: #222222;
+    margin-bottom: 4px;
+}
+
+.status-option p {
+    font-size: 13px;
+    color: #777777;
+}
+
+/* Hover effect on category */
+
+.status-option:hover {
+    background: #f5f5f5;
+    padding-left: 55px;
+}
+
+.status-option:hover h3 {
+    color: #e10600;
+}
+
+
+
+/* Interval vs Leader Section */
+
+.versus-section {
+    margin-top: 35px;
+    padding: 35px;
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.versus-heading {
+    margin-bottom: 25px;
+}
+
+.versus-heading h2 {
+    font-size: 30px;
+    margin-bottom: 9px;
+}
+
+.versus-heading p {
+    font-size: 15px;
+    color: #666666;
+}
+
+.versus-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.versus-card {
+    flex: 1;
+    text-align: center;
+    overflow: hidden;
+}
+
+.versus-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.0);
+    border-radius: 10px;
+    transition: transform 0.35s ease;
+}
+
+.versus-card img:hover {
+    transform: scale(1.25);
+}
+
+.versus-card h3 {
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 22px;
+    color: #e10600;
+}
+
+.versus-card p {
+    font-size: 14px;
+    color: #666666;
+}
+
+.versus-text {
+    font-size: 25px;
+    font-weight: bold;
+    color: #e10600;
+    flex-shrink: 0;
+}
+
+
+
+
+/* Lesson Navigation Buttons */
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0;
+    padding: 0 8%;
+}
+
+.previous-lesson a,
+.final-lesson-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 14px 28px;
+    background: #fe0000;
+    color: #ffffff;
+
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.previous-lesson a:hover,
+.final-lesson-button:hover {
+    background: #cc0000;
+}
+
+.final-lesson-button span {
+    font-size: 23px;
+}
+
